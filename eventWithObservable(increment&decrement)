@@ -1,0 +1,34 @@
+import { Component, OnInit } from '@angular/core';
+import { Observable}  from 'rxjs/Observable';
+import 'rxjs/Rx';
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+  constructor(){
+    
+  }
+  ngOnInit(){
+    let incrementBtn=document.getElementById('increment');
+    let decrementBtn=document.getElementById('decrement');
+    let counter=document.getElementById('counter');
+
+    let incrementClick=Observable.fromEvent(incrementBtn , 'click');
+    let decrementClick=Observable.fromEvent(decrementBtn , 'click');
+    
+    let click=Observable
+    .merge(incrementClick , decrementClick)
+    .map((event:any)=>
+    parseInt(event.target.value)
+  );
+
+    let total=click
+    .scan((total , value)=> total + value , 0);
+
+    total.subscribe(total =>{
+      counter.innerText=total.toString();
+    });
+  }
+}
