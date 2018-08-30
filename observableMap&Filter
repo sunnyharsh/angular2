@@ -1,0 +1,35 @@
+import { Component } from '@angular/core';
+import { Observable}  from 'rxjs/Observable';
+import 'rxjs/Rx';
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  // name = '';
+  testStr = '';
+  constructor(){
+    console.clear();
+    let stream=new Observable(observer=>{
+      let count=0;
+      let interval=setInterval(()=>{
+        observer.next(count++);
+      },1000);
+      return ()=>{
+        clearInterval(interval);
+      }
+    });
+    // **************** FILTER function used of Observable****************
+                        //ANS comes 1-2-3-4-5-6-7
+                        //AND comes this also 2-4-6-8
+                // stream.filter((value:number)=>value%2===0)
+                // .subscribe(value=> console.log(value));
+
+     // **************** MAP function used of Observable****************
+                    //ANS comes 1-2-3-4-5-6-7
+                     //ANS comes 1-4-9-16
+                  stream.map((value:number)=>value *value)
+                  .subscribe(value=>console.log(value));
+  }
+}
