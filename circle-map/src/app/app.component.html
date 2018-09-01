@@ -1,0 +1,62 @@
+<h1 style="align: center">Angular circle map</h1>
+<div id="search">
+    
+    <div class="form-group">
+        <input type="text"  #start placeholder="Search for starting Location" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control" #search>
+    </div>
+    <div class="form-group">
+        <input type="text"  #end placeholder="Search for destination Location" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control" #search>
+    </div>
+    <div class="form-group">
+        <button (click)="direction(start , end)" class="btn btn-success">Direction</button>
+    </div>
+    
+</div>
+<div class="grpOfbtn">
+  <button class="btn btn-primary mapChange" value="roadmap">roadmap</button>
+  <button class="btn btn-primary mapChange" value="hybrid">hybrid</button>
+  <button class="btn btn-primary mapChange" value="satellite">satellite</button>
+  <button class="btn btn-primary mapChange" value="terrain">terrain</button>
+</div>
+<div id="colorBtns">
+    <span>poi color change</span>
+    <button class="btn btn-danger color" value="red"></button>
+    <button class="btn btn-success color" value="green"></button>
+    <button class="btn btn-warning color" value="yellow"></button>
+    <button class="btn btn-info color" value="aqua"></button>
+</div>
+<agm-map
+  [mapTypeId]="type"
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [zoomControl]="false"
+  [draggable]="true"
+  (mapClick)="mapClicked($event)">
+  
+  <agm-direction [origin]="origin" [destination]="destination" ></agm-direction>
+  <div id="circle">
+    <agm-circle 
+        [latitude]="lat" 
+        [longitude]="lng" 
+        [radius]="500"
+        [fillColor]="color"
+        [circleDraggable]="true"
+        [editable]="true">
+    </agm-circle>
+</div>
+   <div id="marker">
+        <agm-marker
+        [latitude]="lat"
+        [longitude]="lng"
+        [visible]="true"
+        [iconUrl]="icon"
+        [markerDraggable]="true"
+        (click)="clickedMarker()"
+        >
+        </agm-marker>
+   </div>
+    
+    
+    
+</agm-map>
